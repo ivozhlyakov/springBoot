@@ -1,12 +1,15 @@
 package ru.ivozklyakov.springBoot.dao.entity;
 
-import javax.persistence.*;
+import org.hibernate.annotations.Synchronize;
 
-@Entity(name = "TAX_ENUM")
+import javax.persistence.*;
+import java.lang.annotation.Annotation;
+
+@Entity
+@Table(name = "TAX_ENUM")
 public class TaxEnum {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name = "ID")
     private Long id;
 
@@ -57,4 +60,5 @@ public class TaxEnum {
     public void setOrdinal(Integer ordinal) {
         this.ordinal = ordinal;
     }
+
 }

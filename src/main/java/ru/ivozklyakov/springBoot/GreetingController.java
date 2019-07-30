@@ -1,15 +1,18 @@
 package ru.ivozklyakov.springBoot;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.ivozklyakov.springBoot.dao.TaxEnumRepo;
+import org.springframework.web.bind.annotation.RestController;
 import ru.ivozklyakov.springBoot.dao.entity.TaxEnum;
+import ru.ivozklyakov.springBoot.dao.repository.TaxEnumRepo;
 
+import java.util.List;
 import java.util.Map;
 
-@Controller
+@RestController
 public class GreetingController {
 
     @Autowired
@@ -30,10 +33,8 @@ public class GreetingController {
 
 
     @GetMapping("/taxenum")
-    public String getAllEnum(Map<String, Object> model) {
-        Iterable<TaxEnum> taxEnums = taxEnumRepo.findAll();
-        model.put("taxenum", taxEnums);
-        return "taxenum";
+    public ResponseEntity<?> getAllEnum(Pageable pageable) {
+        return ResponseEntity.ok(taxEnumRepo.findAll(pageable));
     }
 
 }
