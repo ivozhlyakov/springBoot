@@ -1,9 +1,6 @@
 package ru.ivozklyakov.springBoot.dao.entity;
 
-import org.hibernate.annotations.Synchronize;
-
 import javax.persistence.*;
-import java.lang.annotation.Annotation;
 
 @Entity
 @Table(name = "TAX_ENUM")
@@ -21,12 +18,6 @@ public class TaxEnum {
     private Integer ordinal;
 
     public TaxEnum() {
-    }
-
-    public TaxEnum(String enumSysName, String sysName, Integer ordinal) {
-        this.enumSysName = enumSysName;
-        this.sysName = sysName;
-        this.ordinal = ordinal;
     }
 
     public Long getId() {
@@ -60,5 +51,4 @@ public class TaxEnum {
     public void setOrdinal(Integer ordinal) {
         this.ordinal = ordinal;
     }
-
 }
