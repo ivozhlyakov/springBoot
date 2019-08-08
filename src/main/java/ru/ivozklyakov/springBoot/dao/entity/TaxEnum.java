@@ -17,7 +17,9 @@ public class TaxEnum {
     @Column(name = "ORDINAL")
     private Integer ordinal;
 
+
     public TaxEnum() {
+
     }
 
     public Long getId() {

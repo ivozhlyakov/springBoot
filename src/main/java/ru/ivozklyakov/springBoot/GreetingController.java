@@ -6,7 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.ivozklyakov.springBoot.dao.dto.TaxEnumDto;
 import ru.ivozklyakov.springBoot.dao.entity.TaxEnum;
+import ru.ivozklyakov.springBoot.dao.repository.TaxEnumLngRepo;
 import ru.ivozklyakov.springBoot.dao.repository.TaxEnumRepo;
 
 import java.util.HashMap;
@@ -17,7 +19,8 @@ public class GreetingController {
 
     @Autowired
     private TaxEnumRepo taxEnumRepo;
-
+    @Autowired
+    private TaxEnumLngRepo taxEnumLngRepo;
 
     @GetMapping("/greeting")
     public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Map<String, Object> model) {
@@ -34,7 +37,7 @@ public class GreetingController {
 
     @GetMapping("/taxenum")
     public String getAllEnum(Map<String, Object> model) {
-        Iterable<TaxEnum> taxEnums = taxEnumRepo.findAll();
+        Iterable<TaxEnumDto> taxEnums = taxEnumLngRepo.findAllLng("ru");
         model.put("taxenum", taxEnums);
         getOperType(model);
         return "taxenum";

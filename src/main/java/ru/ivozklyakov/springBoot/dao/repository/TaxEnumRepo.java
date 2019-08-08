@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import ru.ivozklyakov.springBoot.dao.entity.TaxEnum;
+import ru.ivozklyakov.springBoot.dao.dto.TaxEnumDto;
 
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,7 @@ public interface TaxEnumRepo extends JpaRepository<TaxEnum, Long>
 
         @Query("select t from TaxEnum t where t.enumSysName  like :enumSysName")
         List<TaxEnum> findByEnumSysName(@Param(value = "enumSysName") String enumSysName);
+
 
 /*
     Page<TaxEnum> findAll(Pageable pageable);
