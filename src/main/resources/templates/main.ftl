@@ -15,14 +15,28 @@
     <input type="text" name="enumSysName">
     <button type="submit">Найти</button>
 </form-->
-<#list taxenum as en>
     <div>
-        ${en.id}
-        ${en.enumSysName}
-        ${en.sysName}
-        ${en.name}
-    </div>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>ENUM_SYSNAME</th>
+            <th>SYSNAME</th>
+            <th>NAME</th>
+        </tr>
+        </thead>
+<#list taxenum as en>
+<tr>
+        <td>${en.id}</td>
+        <td>${en.enumSysName}</td>
+        <td>${en.sysName}</td>
+        <td>${en.name}</td>
+</tr>
     <#else>
-    Non Selected!!!
+        <tr>
+            <td colspan="4">Non Selected!!!</td>
+        </tr>
 </#list>
+    </table>
+    </div>
 </@common.page>
