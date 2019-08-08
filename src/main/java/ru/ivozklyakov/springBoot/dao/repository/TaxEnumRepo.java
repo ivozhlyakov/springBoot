@@ -17,7 +17,11 @@ public interface TaxEnumRepo extends JpaRepository<TaxEnum, Long>
         @Query("select t from TaxEnum t where t.sysName  = :sysName")
         List<TaxEnum> findBySysName(@Param(value = "sysName") String sysName);
 
-        @Query("select t.sysName as sysname from TaxEnum t where t.enumSysName = 'OBJECT_TYPE' group by t.sysName")
+        @Query("select t.sysName as sysname " +
+                "from TaxEnum t " +
+                "where t.enumSysName = 'OBJECT_TYPE' " +
+                "group by t.sysName order by sysname asc"
+        )
         List<Map<String, String>> findOperType();
 
         @Query("select t from TaxEnum t where t.enumSysName  like :enumSysName")

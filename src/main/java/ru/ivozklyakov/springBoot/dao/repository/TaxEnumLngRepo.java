@@ -15,4 +15,11 @@ public interface TaxEnumLngRepo extends JpaRepository<TaxEnumLng, TaxEnumLngId> 
             "inner join el.taxEnum " +
             "where  el.locale = :locale")
     List<TaxEnumDto> findAllLng(@Param(value = "locale") String locale);
+
+    @Query("select new ru.ivozklyakov.springBoot.dao.dto.TaxEnumDto(el, el.taxEnum) from TaxEnumLng el " +
+            "inner join el.taxEnum " +
+            "where el.taxEnum.sysName = :sysname and  el.locale = :locale")
+    List<TaxEnumDto> findBySysName(@Param(value = "sysname") String sysname, @Param(value = "locale") String locale);
+
+
 }
