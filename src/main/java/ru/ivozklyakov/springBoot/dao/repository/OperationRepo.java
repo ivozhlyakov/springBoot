@@ -13,22 +13,21 @@ import java.util.Map;
 
 public interface OperationRepo extends JpaRepository<BaseOperation, Long> {
 
-    @Query(value = "select bo.baseoperid, ca.CORPACTNUMBER, en.sysName " +
+    @Query(value = "select bo.baseoperid as BASEOPERID, ca.CORPACTNUMBER as CORPACTNUMBER, en.sysName as SYSNAME " +
             "from TAX_BASEOPERATION bo " +
             "inner join TAX_CORPACTION ca on bo.baseoperid = ca.baseoperid " +
             "inner join TAX_ENUM en on en.id = bo.operTypeId " +
             "where ca.CORPACTIONTYPEID in (2204, 2201, 2202) " +
-            "and bo.operTypeId = 2109 " +
-            "order by bo.baseoperid desc " +
-            "\n-- #pageable"
+            "and bo.operTypeId = :operTypeId " +
+            "\n--#pageable\n"
             , countQuery = "select count(1) " +
                         "from TAX_BASEOPERATION bo " +
                         "inner join TAX_CORPACTION ca on bo.baseoperid = ca.baseoperid " +
                         "inner join TAX_ENUM en on en.id = bo.operTypeId " +
                         "where ca.CORPACTIONTYPEID in (2204, 2201, 2202) " +
-                        "and bo.operTypeId = 2109"
+                        "and bo.operTypeId = :operTypeId"
             , nativeQuery = true
 
             )
-    Page<Map> findCorpAct(Pageable pageable);
+    Page<Map> findCorpAct(@Param(value = "operTypeId") Long operTypeId, Pageable pageable);
 }

@@ -49,4 +49,7 @@
             </div>
         </tr>
     </table>
+
+    <#include "parts/operList.ftl" />
+
 </@common.page>

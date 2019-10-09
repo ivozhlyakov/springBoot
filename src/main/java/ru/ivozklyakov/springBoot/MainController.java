@@ -2,10 +2,12 @@ package ru.ivozklyakov.springBoot;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +25,9 @@ import java.util.Map;
 @Controller
 public class MainController {
 
+    Iterable<TaxEnumDto> taxEnums = Collections.emptyList();
+    Long operTypeId = -100L;
+
     @Autowired
     private TaxEnumRepo taxEnumRepo;
     @Autowired
@@ -32,16 +37,17 @@ public class MainController {
 
     @GetMapping("/main")
     public String getObjectType(@RequestParam(required = false) String operType,
-                                Map<String, Object> model,
-                                @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
+                                Model model,
+                                @PageableDefault(sort = {"BASEOPERID"}, direction = Sort.Direction.DESC) Pageable pageable) {
         getOperType(model);
-        Iterable<TaxEnumDto> taxEnums = Collections.emptyList();
         if (operType != null && !operType.isEmpty()) {
-            taxEnums = taxEnumLngRepo.findBySysName(operType, "ru");
-            Page<Map> operationDtoPage = operationRepo.findCorpAct(pageable);
-            model.put("operationDtoPage", operationDtoPage);
+            taxEnums = taxEnumLngRepo.findBySysName(operType, "ru", "OBJECT_TYPE");
+            operTypeId = taxEnums.iterator().next().getId();
         }
-        model.put("taxenum", taxEnums);
+
+        Page<Map> operationDtoPage = operationRepo.findCorpAct(operTypeId, pageable);
+        model.addAttribute("page", operationDtoPage);
+        model.addAttribute("taxenum", taxEnums);
         return "main";
     }
 
@@ -66,9 +72,9 @@ public class MainController {
         return "main";
     }
 */
-    private void getOperType(Map<String, Object> map) {
+    private void getOperType(Model map) {
         Iterable<Map<String, String>> operType = taxEnumRepo.findOperType();
-        map.put("objecttype", operType);
+        map.addAttribute("objecttype", operType);
 
     }
 }
