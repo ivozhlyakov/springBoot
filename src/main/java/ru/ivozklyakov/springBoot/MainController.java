@@ -15,8 +15,10 @@ import ru.ivozklyakov.springBoot.dao.dto.OperationDto;
 import ru.ivozklyakov.springBoot.dao.dto.TaxEnumDto;
 import ru.ivozklyakov.springBoot.dao.entity.TaxEnum;
 import ru.ivozklyakov.springBoot.dao.repository.OperationRepo;
+import ru.ivozklyakov.springBoot.dao.repository.OperationRepo2;
 import ru.ivozklyakov.springBoot.dao.repository.TaxEnumLngRepo;
 import ru.ivozklyakov.springBoot.dao.repository.TaxEnumRepo;
+import ru.ivozklyakov.springBoot.dao.service.OperationService;
 
 import java.util.Collections;
 import java.util.List;
@@ -35,6 +37,10 @@ public class MainController {
     @Autowired
     private OperationRepo operationRepo;
 
+    @Autowired
+    private OperationService operationService;
+
+
     @GetMapping("/main")
     public String getObjectType(@RequestParam(required = false) String operType,
                                 Model model,
@@ -45,7 +51,8 @@ public class MainController {
             operTypeId = taxEnums.iterator().next().getId();
         }
 
-        Page<Map> operationDtoPage = operationRepo.findCorpAct(operTypeId, pageable);
+        Page<OperationDto> operationDtoPage = operationService.getCorpAct(pageable);
+        //Page<Map> operationDtoPage = operationRepo.findCorpAct(operTypeId, pageable);
         model.addAttribute("page", operationDtoPage);
         model.addAttribute("taxenum", taxEnums);
         return "main";

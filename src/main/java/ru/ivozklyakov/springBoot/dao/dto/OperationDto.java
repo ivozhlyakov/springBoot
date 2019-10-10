@@ -1,17 +1,17 @@
 package ru.ivozklyakov.springBoot.dao.dto;
 
-import ru.ivozklyakov.springBoot.dao.entity.BaseOperation;
 import ru.ivozklyakov.springBoot.dao.entity.CorpAction;
+import ru.ivozklyakov.springBoot.dao.entity.TaxEnum;
 
 public class OperationDto {
     private Long id;
     private String number;
     private String type;
 
-    public OperationDto(Long id, String num , String type) {
-        this.id = id;
-        this.number = num;
-        this.type = type;
+    public OperationDto(CorpAction corpAction, TaxEnum taxEnum) {
+        this.id = corpAction.getBaseOperId();
+        this.number = corpAction.getNumber();
+        this.type = taxEnum.getSysName();
     }
 
     public Long getId() {

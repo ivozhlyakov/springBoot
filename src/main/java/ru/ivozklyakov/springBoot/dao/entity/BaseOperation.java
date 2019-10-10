@@ -30,14 +30,14 @@ public class BaseOperation {
     @Column(name = "DFI")
     private Integer dfi;
 
- /*   @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "base_Oper_Id", insertable = false, updatable = false)
-    private CorpAction corpAction;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "OPERTYPEID", insertable = false, updatable = false)
+    private TaxEnum taxEnum;
 
-    public CorpAction getCorpAction() {
-        return corpAction;
+    public TaxEnum getTaxEnum() {
+        return taxEnum;
     }
-*/
+
     public BaseOperation() {
     }
 

@@ -1,9 +1,6 @@
 package ru.ivozklyakov.springBoot.dao.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
@@ -14,7 +11,7 @@ public class CorpAction {
     @Column(name ="CORPACTIONID")
     private Long corpActionId;
     @Column(name ="BASEOPERID")
-    private Long base_Oper_Id;
+    private Long BASEOPERID;
     @Column(name ="CORPACTNUMBER")
     private String number;
     @Column(name ="CORPACTIONKINDID")
@@ -43,6 +40,14 @@ public class CorpAction {
     public CorpAction() {
     }
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "BASEOPERID", insertable = false, updatable = false)
+    private BaseOperation baseOperation;
+
+    public BaseOperation getBaseOperation() {
+        return baseOperation;
+    }
+
     public Long getCorpActionId() {
         return corpActionId;
     }
@@ -52,11 +57,11 @@ public class CorpAction {
     }
 
     public Long getBaseOperId() {
-        return base_Oper_Id;
+        return BASEOPERID;
     }
 
     public void setBaseOperId(Long baseOperId) {
-        this.base_Oper_Id = baseOperId;
+        this.BASEOPERID = baseOperId;
     }
 
     public String getNumber() {
